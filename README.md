@@ -2,30 +2,29 @@
 
 ## 📌 Overview
 
-TeleConsultation is a full-stack telemedicine platform designed to connect patients with doctors efficiently.
-It integrates AI-based disease risk prediction, real-time consultation, and scalable backend architecture.
+TeleConsultation is a **scalable, full-stack telemedicine platform** designed to connect patients with doctors through intelligent, real-time, and data-driven systems.
 
-This project focuses on building a **real-world healthcare system** with production-level design and future scalability.
+The platform integrates **AI-based disease risk prediction**, **doctor recommendation**, and **real-time video consultation**, while following **modern distributed system design principles**.
 
 ---
 
 ## 🎯 Problem Statement
 
-* Limited access to healthcare in rural/remote areas
-* Inefficient manual diagnosis workflows
-* Lack of intelligent doctor recommendation systems
-* Poor real-time consultation infrastructure
+* Limited access to quality healthcare in rural and remote areas
+* Inefficient and manual diagnosis workflows
+* Lack of intelligent systems for doctor recommendation
+* Poor real-time communication infrastructure in healthcare apps
 
 ---
 
 ## 🚀 Core Features
 
-* 🔐 Role-based Authentication (Patient / Doctor)
-* 📅 Appointment Scheduling System
-* 🧠 AI-based Symptom → Disease Risk Prediction
-* 👨‍⚕️ Doctor Recommendation System
-* 🎥 Real-time Video Consultation (WebRTC)
-* 📡 Scalable Backend with Async Processing
+* 🔐 Role-Based Authentication (Patient / Doctor)
+* 📅 Appointment Scheduling & Management System
+* 🧠 AI-Based Disease Risk Prediction
+* 🩺 Intelligent Doctor Recommendation System
+* 📹 Real-Time Video Consultation (WebRTC)
+* ⚡ Redis-based Caching for performance optimization
 
 ---
 
@@ -33,9 +32,8 @@ This project focuses on building a **real-world healthcare system** with product
 
 ### Frontend
 
-* Next.js / React.js
+* Next.js
 * Tailwind CSS
-* Axios
 
 ### Backend
 
@@ -51,91 +49,180 @@ This project focuses on building a **real-world healthcare system** with product
 
 * Python
 * scikit-learn / PyTorch
-* Pandas, NumPy
 
-### Real-Time Communication
+### Realtime
 
 * WebRTC
-* Socket.io
+* Socket.io (Signaling Server)
 
-### Async Processing & Caching
+### Infrastructure
 
-* Redis
-
-### DevOps (Future Phase)
-
-* Docker
-* Kubernetes
-* Nginx
-* AWS
+* Redis (Caching)
+* Docker (Planned)
+* Kubernetes (Planned)
 
 ---
 
-## 🏗️ System Architecture (High-Level)
+## 🏗️ System Architecture
 
-Client (Frontend)
-↓
-API Server (Node.js)
-↓
-Services (Auth / Appointment / AI)
-↓
-Database (MongoDB) + Cache (Redis)
-↓
-Real-time Layer (WebRTC + Socket.io)
+```
+Client (Next.js)
+        │
+        ▼
+API Gateway (Node.js)
+        │
+ ┌──────┼──────────────┐
+ │      │              │
+ ▼      ▼              ▼
+Auth   Appointment    User Service
+Service   Service
+ │         │
+ └────┬────┘
+      ▼
+   MongoDB
+
+        ▼
+   Redis Cache
+
+        ▼
+AI Service (Python Microservice)
+
+        ▼
+Realtime Server (Socket.io + WebRTC)
+```
 
 ---
 
-## 🪜 Development Phases
+## 🔄 Core Data Flow
 
-### Phase 1: Core Backend
+### 🧠 AI Prediction Flow
 
-* Express server setup
+```
+Patient Symptoms → API → AI Service → Risk Prediction → Response
+```
+
+Example:
+
+```json
+{
+  "symptoms": ["fever", "cough", "fatigue"]
+}
+```
+
+Response:
+
+```json
+{
+  "flu": 0.72,
+  "covid": 0.18,
+  "cold": 0.10
+}
+```
+
+---
+
+### 🩺 Doctor Recommendation Flow
+
+```
+Prediction Output → Mapping Logic → Specialist Recommendation
+```
+
+---
+
+### 📹 Video Consultation Flow
+
+```
+Client → Signaling Server (Socket.io) → WebRTC Peer Connection
+```
+
+Includes:
+
+* STUN/TURN servers
+* NAT traversal handling
+
+---
+
+## 🧩 Services Breakdown
+
+* **Auth Service** → Authentication & Authorization (JWT)
+* **User Service** → Patient & Doctor profiles
+* **Appointment Service** → Booking & scheduling
+* **AI Service** → Disease prediction (Python microservice)
+* **Realtime Service** → WebRTC signaling & communication
+
+---
+
+## ⚙️ Development Roadmap
+
+### 🥇 Phase 1: Backend Core
+
 * Authentication system
-* Appointment booking
+* Role management
+* Basic APIs
 
-### Phase 2: Frontend Integration
+### 🥈 Phase 2: Appointment System
 
-* UI for booking & dashboard
+* Slot management
+* Booking flow
+* Status tracking
 
-### Phase 3: Real-Time Communication
+### 🥉 Phase 3: Realtime Communication
 
-* WebRTC video consultation
+* Socket.io signaling server
+* WebRTC integration
 
-### Phase 4: AI Integration
+### 🧠 Phase 4: AI Integration
 
-* Symptom-based prediction system
+* Rule-based → ML model
+* Prediction API
 
-### Phase 5: DevOps (MediOps)
+### 🚀 Phase 5: DevOps & Scaling
 
-* Docker → Kubernetes → Monitoring
+* Dockerization
+* Redis caching
+* Kubernetes deployment
+* Monitoring (Prometheus + Grafana)
 
 ---
 
-## 🌍 Future Vision
+## 📊 Future Enhancements
 
-* Electronic Health Records (EHR) integration
-* Wearable device data integration
-* Multi-region cloud deployment
-* AI-based early disease detection
+* 🏥 Electronic Health Records (EHR) Integration
+* ⌚ Wearable Device Data Integration
+* 🌍 Multi-region Deployment (High Availability)
+* 📈 Observability (Metrics, Logs, Tracing)
+* ⚡ Event-Driven Architecture (Kafka / RabbitMQ)
 
 ---
 
-## 🧠 Key Learning Goals
+## 🛠️ Advanced System Design Concepts
 
-* Scalable system design
-* Real-time communication systems
-* Backend architecture & APIs
-* AI + production integration
-* DevOps and distributed systems
+* Microservices Architecture
+* API Gateway Pattern
+* Caching Strategy (Redis)
+* Async Processing (Future: Message Queues)
+* Horizontal Scalability (Kubernetes)
+* Real-time Communication (WebRTC)
 
 ---
 
 ## 👨‍💻 Author
 
-Ankit Kumar Keshri
+**Ankit Kumar Keshri**
 
 ---
 
-## ⭐ Note
+## ⭐ Project Vision
 
-This project is being built step-by-step with a focus on **real-world engineering practices, scalability, and system design**.
+To build a **production-grade, scalable telemedicine system** that combines:
+
+* Distributed Systems
+* Real-time Communication
+* AI/ML Intelligence
+* DevOps & Cloud Infrastructure
+
+---
+
+## 📌 Note
+
+This project is being built in **phases with production-level architecture**, focusing on **deep system understanding over superficial implementation**.
