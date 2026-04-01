@@ -3,17 +3,17 @@ import Appointment from "../models/appointment.model.js";
 // ================= CREATE APPOINTMENT =================
 export const createAppointment = async (req, res) => {
   try {
-    const { doctor, date } = req.body;
+    const { doctorId, date } = req.body;
 
-    if (!doctor || !date) {
+    if (!doctorId || !date) {
       return res.status(400).json({
-        message: "Doctor and date are required",
+        message: "DoctorId and date are required",
       });
     }
 
     const appointment = await Appointment.create({
-      patient: req.user.id, // from JWT middleware
-      doctor,
+      patient: req.user.id,
+      doctor: doctorId,
       date,
     });
 
@@ -52,7 +52,7 @@ export const getMyAppointments = async (req, res) => {
   }
 };
 
-// ================= UPDATE APPOINTMENT STATUS =================
+// ================= UPDATE STATUS =================
 export const updateAppointmentStatus = async (req, res) => {
   try {
     const { id } = req.params;
@@ -74,10 +74,10 @@ export const updateAppointmentStatus = async (req, res) => {
       });
     }
 
-    // optional: only assigned doctor can update
+    // only doctor can update
     if (appointment.doctor.toString() !== req.user.id) {
       return res.status(403).json({
-        message: "Not authorized to update this appointment",
+        message: "Not authorized",
       });
     }
 
@@ -85,7 +85,7 @@ export const updateAppointmentStatus = async (req, res) => {
     await appointment.save();
 
     res.status(200).json({
-      message: "Appointment status updated",
+      message: "Status updated",
       appointment,
     });
   } catch (error) {

@@ -9,7 +9,6 @@ function DoctorProfile() {
   const [doctor, setDoctor] = useState(null);
   const [date, setDate] = useState("");
 
-  // 🔥 Fetch doctor details
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
@@ -23,22 +22,20 @@ function DoctorProfile() {
     fetchDoctor();
   }, [id]);
 
-  // 🔥 Book appointment
   const bookAppointment = async () => {
     try {
       if (!date) {
-        alert("Please select date & time");
+        alert("Please select date");
         return;
       }
 
       const res = await API.post("/appointments", {
-        doctor: id, // ✅ matches backend controller
+        doctorId: id,   // ✅ FIXED
         date,
       });
 
       const appointmentId = res.data.appointment._id;
 
-      // 👉 Navigate to chat room
       navigate(`/chat/${appointmentId}`);
     } catch (err) {
       console.log(err);
@@ -50,7 +47,7 @@ function DoctorProfile() {
   return (
     <div style={{ padding: "20px" }}>
       <h2>{doctor.name}</h2>
-      <p>Role: {doctor.role}</p>
+      <p>Specialty: {doctor.specialty}</p>
 
       <h3>Book Appointment</h3>
 
@@ -63,7 +60,7 @@ function DoctorProfile() {
       <br /><br />
 
       <button onClick={bookAppointment}>
-        Book & Start Chat
+        Book Appointment & Start Chat
       </button>
     </div>
   );
