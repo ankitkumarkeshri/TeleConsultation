@@ -1,30 +1,24 @@
-import mongoose from "mongoose";
+import Appointment from "../models/appointment.model.js";
 
-const appointmentSchema = new mongoose.Schema(
-  {
-    patient: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    doctor: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    date: {
-      type: Date,
-      required: true,
-    },
-    status: {
-      type: String,
-      enum: ["pending", "confirmed", "completed", "cancelled"],
-      default: "pending",
-    },
-  },
-  { timestamps: true }
-);
+export const createAppointment = async (req, res) => {
+  try {
+    const { doctorId, date } = req.body;
 
-const Appointment = mongoose.model("Appointment", appointmentSchema);
+    if (!date) {
+      return res.status(400).json({ message: "Date is required" });
+    }
 
-export default Appointment;
+    const appointment = await Appointment.create({
+      patient: req.user._id,
+      doctor: doctorId,
+      date,
+    });
+
+    res.status(201).json({
+      message: "Appointment created successfully",
+      appointment,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
